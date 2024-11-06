@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <BrowserRouter basename="/FlexWork-Frontend">
+    <BrowserRouter>
         <App />
     </BrowserRouter>
 )
