@@ -1,0 +1,89 @@
+.page__main-block {
+    padding-top: 150px;
+    /* height: calc(100vh - 150px); */
+    z-index: 1;
+    
+
+   
+
+
+}
+
+.main-content{
+
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-weight: 500;
+    justify-content: center
+    
+
+}
+
+.title_main{
+    font-size:  2.25rem;
+    font-weight: bold; /* Сделаем метку жирным шрифтом */
+    
+}
+.main-block__body {
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+   
+    gap: 40px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 50px 30px 30px 30px;
+}
+
+
+.main-block__details{
+    color: var(--text);
+    max-width: 80%;
+}
+
+.main-block__details p {
+    margin: 20px 0; 
+    padding: 5px 0; /* Добавляем вертикальные отступы */
+    line-height: 1.25; /* Увеличенный межстрочный интервал */
+
+}
+
+.detail-label {
+    font-weight: bold; /* Сделаем метку жирным шрифтом */
+    margin-right: 7px; /* Добавляем отступ между меткой и значением */
+    color: var(--text)
+}
+
+
+.price{
+    color: var(--main_color);
+    font-weight: bold; /* Сделаем метку жирным шрифтом */
+}
+
+.main-block__image {
+    max-width: 90%;
+    height: auto;
+   
+}
+
+
+.main-block__image img {
+
+    max-width: 100%; /* ограничить ширину изображения контейнером */
+    height: auto; /* поддерживать соотношение сторон */
+    border-radius: 10px; /* добавление округлости к углам, если требуется */
+    border: 2px solid var(--border);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     max-height: 400px;
+}
+
+.main-block__container-details{
+    display: flex;
+    gap:7px
+}
+
+
+
+
