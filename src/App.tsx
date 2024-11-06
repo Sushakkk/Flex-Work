@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="wrapper">
       <Header />
-  
+
         <Routes>
           <Route path="/" element={<HomePage/>} />
           <Route path="/activities" element={<ActivitiesPage/>} />

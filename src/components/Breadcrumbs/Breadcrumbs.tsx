@@ -14,7 +14,8 @@ const Breadcrumbs: React.FC = () => {
   };
 
   return (
-    <nav className="breadcrumbs">
+    <div className="breadcrumbs-container">
+      <nav className="breadcrumbs">
       <span>
         <Link to="/">{breadcrumbsMapping['']}</Link> {/* Главная */}
       </span>
@@ -52,6 +53,7 @@ const Breadcrumbs: React.FC = () => {
         );
       })}
     </nav>
+    </div>
   );
 };
 

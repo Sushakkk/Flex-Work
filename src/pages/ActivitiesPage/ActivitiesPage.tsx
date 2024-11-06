@@ -4,6 +4,11 @@ import { ActivitiesMocks } from '../../modules/mocks';
 
 import { T_Activity } from '../../modules/types';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+
+
+import basket from '../../assets/images/basket.svg'
+import loupe from '../../assets/images/Group.svg'
 
 const ActivitiesPage = () => {
     const [activities, setActivities] = useState<T_Activity[]>([]);
@@ -49,7 +54,9 @@ const ActivitiesPage = () => {
 
     return (
         <main id="main" className="page">
+             <Breadcrumbs /> 
             <div className="page__services _container">
+
                 <div className="services__content">
                     <div className="services__search">
                         <form onSubmit={handleSubmit}>
@@ -63,14 +70,14 @@ const ActivitiesPage = () => {
                                     className="search-input"
                                 />
                                 <button type="submit" className="search-button">
-                                    <img src="http://127.0.0.1:9000/flexwork/Group.svg" alt="Search" />
+                                    <img src={loupe ||"http://127.0.0.1:9000/flexwork/Group.svg"} alt="Search" />
                                 </button>
                             </div>
                         </form>
                         <div className="basket-container">
                             <img
                                 className="basket__img"
-                                src="http://127.0.0.1:9000/flexwork/basket.svg"
+                                src={basket || "http://127.0.0.1:9000/flexwork/basket.svg"}
                                 alt="basket"
                             />
                             {count > 0 && (
