@@ -1,13 +1,4 @@
-.page__main-block {
-    padding-top: 150px;
-    /* height: calc(100vh - 150px); */
-    z-index: 1;
-    
 
-   
-
-
-}
 
 .main-content{
 
@@ -22,6 +13,7 @@
 
 .title_main{
     font-size:  2.25rem;
+    text-align: center;
     font-weight: bold; /* Сделаем метку жирным шрифтом */
     
 }
@@ -41,6 +33,18 @@
 .main-block__details{
     color: var(--text);
     max-width: 80%;
+    
+}
+
+
+@media (max-width: 500px) {
+    .main-block__details{
+        width: 100%;
+    }
+    .title_main{
+        font-size:  24px;
+        
+    }
 }
 
 .main-block__details p {

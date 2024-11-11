@@ -1,11 +1,21 @@
 import { T_Activity } from './types';
 
+import img1 from '../assets/images/1.png';
+import img2 from '../assets/images/2.jpg';
+import img3 from '../assets/images/3.jpg';
+import img4 from '../assets/images/4.webp';
+import img5 from '../assets/images/5.png';
+import img6 from '../assets/images/6.webp';
+
+
+
+
 export const ActivitiesMocks: T_Activity[] = [
   {
     id: 1,
     title: "Маникюр и педикюр",
     status: "active",
-    img_url: "",
+    img_url: img1,
     description: "Оказание профессиональных услуг маникюра и педикюра, комплексный уход за руками и ногами, создание стильных и современных дизайнов ногтей.",
     category: "Красота и здоровье"
   },
@@ -13,7 +23,7 @@ export const ActivitiesMocks: T_Activity[] = [
     id: 2,
     title: "Услуги косметолога",
     status: "active",
-    img_url: "",
+    img_url: img2,
     description: "Комплексные услуги по уходу за кожей лица и тела, направленные на улучшение состояния кожи и решение конкретных проблем, таких как акне, пигментация, возрастные изменения и сухость кожи.",
     category: "Красота и здоровье"
   },
@@ -21,7 +31,7 @@ export const ActivitiesMocks: T_Activity[] = [
     id: 3,
     title: "Ремонт бытовой техники",
     status: "active",
-    img_url: "",
+    img_url: img3,
     description: "Оказание услуг по ремонту бытовой техники на дому с быстрым и качественным решением проблем с техникой.",
     category: "Бытовые услуги"
   },
@@ -29,7 +39,7 @@ export const ActivitiesMocks: T_Activity[] = [
     id: 4,
     title: "Консультации по медицинским вопросам",
     status: "active",
-    img_url: "",
+    img_url: img4,
     description: "Консультации и рекомендации по медицинским вопросам от опытных врачей и специалистов.",
     category: "Красота и здоровье"
   },
@@ -37,7 +47,7 @@ export const ActivitiesMocks: T_Activity[] = [
     id: 5,
     title: "Репетитор по Английскому языку",
     status: "active",
-    img_url: "",
+    img_url: img5,
     description: "Проведение индивидуальных и групповых занятий по английскому языку для детей, подростков и взрослых.",
     category: "Образование"
   },
@@ -45,7 +55,7 @@ export const ActivitiesMocks: T_Activity[] = [
     id: 6,
     title: "Уборка и клининг",
     status: "active",
-    img_url: "",
+    img_url: img6,
     description: "Предоставление профессиональных услуг по уборке и клинингу жилых и коммерческих помещений с использованием качественных чистящих средств и современного оборудования. Услуги включают как разовые генеральные уборки, так и регулярное поддержание чистоты.",
     category: "Бытовые услуги"
   }

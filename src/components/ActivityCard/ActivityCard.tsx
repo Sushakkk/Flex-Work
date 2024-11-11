@@ -8,6 +8,7 @@ type ActivityCardProps = {
 };
 
 const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => { 
+    
    
     return (
         <div className="services__column" key={activity.id}>
@@ -26,11 +27,11 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
                     >
                         Подробнее
                     </Link>
-                    <form method="post" action={`/activity/${activity.id}/add_activity/`}>
+                    {/* <form method="post" action={`/activity/${activity.id}/add_activity/`}>
                         <button className="main-block__button__add" type="submit">
                             +
                         </button>
-                    </form>
+                    </form> */}
                 </div>
             </div>
         </div>

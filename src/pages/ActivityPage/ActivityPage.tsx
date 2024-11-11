@@ -1,9 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
 import './ActivityPage.css';
+import '../ActivitiesPage/ActivitiesPage.css'
 import { ActivitiesMocks } from '../../modules/mocks';
 import { T_Activity } from '../../modules/types';
 import { useParams } from 'react-router-dom';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 
 
@@ -49,6 +51,8 @@ const ActivityPage: React.FC = () => {
   }
 
   return (
+  <main id="main" className="page">
+    <Breadcrumbs/>
     <div className="page__main-block _container">
       <div className="main-content">
         <div className="main-block__body">
@@ -62,14 +66,15 @@ const ActivityPage: React.FC = () => {
           </div>
           <div className="main-block__details">
             <div className="main-block__container-details">
-              <div><span className="detail-label">Описание:</span></div>
-              <div>{activity.description}</div>
+              <div><span className="detail-label">Описание:</span>{activity.description}</div>
+              {/* <div>{activity.description}</div> */}
             </div>
             <p><span className="detail-label">Категория:</span> {activity.category}</p>
           </div>
         </div>
       </div>
     </div>
+  </main>
   );
 };
 
