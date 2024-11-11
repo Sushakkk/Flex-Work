@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/FlexWork-Frontend">
     <App />
   </BrowserRouter>
 );
@@ -13,11 +13,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 
 
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', () => {
-//       navigator.serviceWorker
-//         .register('/serviceWorker.js')  // Путь к файлу serviceWorker
-//         .then(() => console.log('Service Worker зарегистрирован'))
-//         .catch((err) => console.log('Ошибка при регистрации Service Worker', err));
-//     });
-//   }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/serviceWorker.js')  // Путь к файлу serviceWorker
+        .then(() => console.log('Service Worker зарегистрирован'))
+        .catch((err) => console.log('Ошибка при регистрации Service Worker', err));
+    });
+  }

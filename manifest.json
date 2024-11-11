@@ -8,11 +8,11 @@
     "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "./tick.png",
+        "src": "./FlexWork-192.png",
         "type": "image/png", "sizes": "192x192"
       },
       {
-        "src": "./tick.png",
+        "src": "./FlexWork-512.png",
         "type": "image/png", "sizes": "512x512"
       }
     ]
