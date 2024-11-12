@@ -1,62 +1,38 @@
-import { useEffect, FormEvent, useState } from 'react'; 
+import {FormEvent, useState } from 'react'; 
 import './ActivitiesPage.css';
-import { ActivitiesMocks } from '../../modules/mocks';
-
-import { T_Activity } from '../../modules/types';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-
-
-import basket from '../../assets/images/basket.svg'
-import loupe from '../../assets/images/Group.svg'
+import basket from '../../assets/images/basket.svg';
+import loupe from '../../assets/images/Group.svg';
+import { GetActivities } from '../../getData';
+import { setTitle, useActivities, useTitle } from '../../slices/activitiesSlice';
+import { useDispatch } from 'react-redux';
 
 const ActivitiesPage = () => {
-    const [activities, setActivities] = useState<T_Activity[]>([]);
-    const [isMock, setIsMock] = useState(false);
-    const [title, setTitle] = useState('');
+
     const [count, setCount] = useState(0);
+    const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
+
+    const dispatch = useDispatch();
+
+    const activities = useActivities();
+  
+    GetActivities()
 
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`/api/activities/?title=${title.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const result = await response.json();
-            setActivities(result.activities);
-            setCount( result.count || 0 );
-            setIsMock(false);
-        } catch (error) {
-            if (!isMock){
-                createMocks();
-
-            }
-            
-        }
+    
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        dispatch(setTitle(selectedTitle));
     };
     
-    
-    const createMocks = () => {
-        setIsMock(true);
-        setActivities(ActivitiesMocks.filter(activity => activity.title.toLowerCase().includes(title.toLowerCase())));
-    }
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        await fetchData();
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+   
 
     return (
         <main id="main" className="page">
-             <Breadcrumbs /> 
+            <Breadcrumbs /> 
             <div className="page__services _container">
-
                 <div className="services__content">
                     <div className="services__search">
                         <form onSubmit={handleSubmit}>
@@ -64,13 +40,13 @@ const ActivitiesPage = () => {
                                 <input
                                     type="text"
                                     name="activity"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={selectedTitle} 
+                                    onChange={(e) => setSelectedTitle(e.target.value)} 
                                     placeholder="Поиск"
                                     className="search-input"
                                 />
                                 <button type="submit" className="search-button">
-                                    <img src={loupe ||"http://127.0.0.1:9000/flexwork/Group.svg"} alt="Search" />
+                                    <img src={loupe || "http://127.0.0.1:9000/flexwork/Group.svg"} alt="Search" />
                                 </button>
                             </div>
                         </form>
@@ -82,13 +58,13 @@ const ActivitiesPage = () => {
                             />
                             {count > 0 && (
                                 <div className="basket_amount">{count}</div>
-                            )} {/* Условный рендеринг здесь */}
+                            )}
                         </div>
                     </div>
 
                     <div className="services__cards">
                         {activities.map((activity) => (
-                            <ActivityCard key={activity.id} activity={activity}/>
+                            <ActivityCard key={activity.id} activity={activity} />
                         ))}
                     </div>
                 </div>
