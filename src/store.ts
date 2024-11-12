@@ -1,11 +1,13 @@
 // store.ts
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./slices/dataSlice";
+
 import activitiesReducer from './slices/activitiesSlice';
+import selfEmployedReducer from "./slices/selfEmployedSlice";
 
 const rootReducer = combineReducers({
-    ourData: dataReducer,
+
     activities: activitiesReducer,
+    self_employed: selfEmployedReducer,
 });
 
 const store = configureStore({

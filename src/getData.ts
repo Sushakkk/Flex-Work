@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDispatch} from "react-redux";
 import { AppDispatch } from "./store";
 import { setSelfEmployedData, useFilters } from "./slices/selfEmployedSlice";
-import { setActivities,useActivities,useTitle } from "./slices/activitiesSlice";
+import { setActivities, useTitle } from "./slices/activitiesSlice";
 import { ActivitiesMocks } from "./modules/mocks";
 
 

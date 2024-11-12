@@ -5,21 +5,19 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import basket from '../../assets/images/basket.svg';
 import loupe from '../../assets/images/Group.svg';
 import { GetActivities } from '../../getData';
-import { setTitle, useActivities, useTitle } from '../../slices/activitiesSlice';
+import { setTitle, useActivities, useCount, useTitle } from '../../slices/activitiesSlice';
 import { useDispatch } from 'react-redux';
 
 const ActivitiesPage = () => {
 
-    const [count, setCount] = useState(0);
     const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
 
     const dispatch = useDispatch();
 
     const activities = useActivities();
+    const count = useCount()
   
     GetActivities()
-
-
     
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
