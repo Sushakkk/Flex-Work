@@ -11,11 +11,29 @@ import HomePage from './pages/HomePage/HomePage'
 import { Routes, Route} from 'react-router-dom';
 import ActivitiesPage from './pages/ActivitiesPage/ActivitiesPage'
 import ActivityPage from './pages/ActivityPage/ActivityPage'
+import { useEffect } from 'react'
+
 
 
 
 
 function App() {
+  useEffect(() => {
+    if (window.TAURI) {
+      const { invoke } = window.TAURI.tauri;
+
+      invoke('tauri', { cmd: 'create' })
+        .then((response: any) => console.log(response))
+        .catch((error: any) => console.log(error));
+
+      return () => {
+        invoke('tauri', { cmd: 'close' })
+          .then((response: any) => console.log(response))
+          .catch((error: any) => console.log(error));
+      };
+    }
+  }, []);
+
  
   return (
     <div className="wrapper">
