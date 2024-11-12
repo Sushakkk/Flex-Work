@@ -2,12 +2,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import activitiesReducer from './slices/activitiesSlice';
-import selfEmployedReducer from "./slices/selfEmployedSlice";
+
 
 const rootReducer = combineReducers({
 
     activities: activitiesReducer,
-    self_employed: selfEmployedReducer,
+
 });
 
 const store = configureStore({
