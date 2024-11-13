@@ -1,4 +1,4 @@
-import {FormEvent, useState } from 'react'; 
+import {FormEvent, useState, useEffect } from 'react'; 
 import './ActivitiesPage.css';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
@@ -16,8 +16,14 @@ const ActivitiesPage = () => {
 
     const activities = useActivities();
     const count = useCount()
-  
+
+
     GetActivities()
+  
+  
+
+
+    
     
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -72,3 +78,4 @@ const ActivitiesPage = () => {
 };
 
 export default ActivitiesPage;
+
