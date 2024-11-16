@@ -8,9 +8,9 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/180.png",
+      "src": "/FlexWork-192.png",
       "type": "image/png",
-      "sizes": "180x180"
+      "sizes": "192x192"
     },
     {
       "src": "/FlexWork-512.png",
