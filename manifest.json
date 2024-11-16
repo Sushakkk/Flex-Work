@@ -1,10 +1,10 @@
 {
     "name": "FlexWork",
     "short_name": "FlexWork",
-    "start_url": "/",
+    "start_url": "/FlexWork-Frontend/",
     "display": "standalone",
     "background_color": "#fdfdfd",
-    "theme_color": "#db4938",
+    "theme_color": "rgb(43, 153, 87)",
     "orientation": "portrait-primary",
     "icons": [
       {
