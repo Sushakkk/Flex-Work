@@ -27,7 +27,7 @@ const ActivitiesPage = () => {
         dispatch(setTitle(selectedTitle));
     };
     
-
+    const currentHost = window.location.hostname;
 
 
     const fetchData = async () => {
@@ -38,6 +38,20 @@ const ActivitiesPage = () => {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
+
+            
+    
+            if (Array.isArray(result.activities)) {
+                result.activities = result.activities.map((activity: { img_url: string }) => {
+                    if (activity.img_url) {
+                        activity.img_url = activity.img_url.replace('127.0.0.1', currentHost);
+                    }
+                    return activity;
+                });
+            } else {
+                console.warn('Details is not an array:', result.activity);
+            }
+
             setActivities(result.activities);
             setCount( result.count || 0 );
             setIsMock(false);
@@ -56,6 +70,7 @@ const ActivitiesPage = () => {
         setActivities(ActivitiesMocks.filter(activity => activity.title.toLowerCase().includes(title.toLowerCase())));
     }
 
+   
    
 
     useEffect(() => {
@@ -78,14 +93,14 @@ const ActivitiesPage = () => {
                                     className="search-input"
                                 />
                                 <button type="submit" className="search-button">
-                                    <img src="http://127.0.0.1:9000/flexwork/Group.svg" alt="Search" />
+                                    <img src={`http://${currentHost}:9000/flexwork/Group.svg`} alt="Search" />
                                 </button>
                             </div>
                         </form>
                         <div className="basket-container">
                             <img
                                 className="basket__img"
-                                src="http://127.0.0.1:9000/flexwork/basket.svg"
+                                src={`http://${currentHost}:9000/flexwork/basket.svg`}
                                 alt="basket"
                             />
                             {count > 0 && (

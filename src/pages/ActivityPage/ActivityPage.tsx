@@ -14,12 +14,17 @@ const ActivityPage: React.FC = () => {
   const [activity, setActivity] = useState<T_Activity | null>(null);
   const [isMock, setIsMock] = useState(false);
 
+  const currentHost = window.location.hostname;
+
 
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/activities/${id}`, { signal: AbortSignal.timeout(1000) });
       if (!response.ok) throw new Error('Network response was not ok');
+
+    
       const data = await response.json();
+      data.img_url= data.img_url.replace('127.0.0.1', currentHost);
       setActivity(data);
     } catch (error) {
       console.error('Fetch error:', error);

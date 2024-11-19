@@ -8,13 +8,14 @@ type ActivityCardProps = {
 };
 
 const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => { 
-    
+    console.log(activity.img_url)
    
     return (
         <div className="services__column" key={activity.id}>
             <div className="services__card item-services">
                 <h3 className="item-service__title">{activity.title}</h3>
                 <div className="item-service__img">
+                    
                     <img
                         src={activity.img_url || 'https://avatars.mds.yandex.net/i?id=284efc4987205a8f579db78365821d19_sr-8271622-images-thumbs&n=13'}
                         alt={activity.title}
