@@ -6,6 +6,8 @@ import { T_Activity } from '../../modules/types';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
 import { setTitle, useTitle } from '../../slices/activitiesSlice';
 import { useDispatch } from 'react-redux';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+
 
 const ActivitiesPage = () => {
     const [activities, setActivities] = useState<T_Activity[]>([]);
@@ -79,6 +81,7 @@ const ActivitiesPage = () => {
 
     return (
         <main id="main" className="page">
+            <Breadcrumbs/>
             <div className="page__services _container">
                 <div className="services__content">
                     <div className="services__search">
