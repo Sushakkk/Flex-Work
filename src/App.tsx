@@ -12,6 +12,11 @@ import { Routes, Route} from 'react-router-dom';
 import ActivitiesPage from './pages/ActivitiesPage/ActivitiesPage'
 import ActivityPage from './pages/ActivityPage/ActivityPage'
 import { useEffect } from 'react';
+import ProfilePage from './pages/ProfilePage'
+import { AccessDeniedPage } from './pages/AccessDeniedPage/AccessDeniedPage'
+import NotFoundPage from './pages/NotFoundPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 
 
@@ -41,6 +46,12 @@ function App() {
           <Route path="/" element={<HomePage/>} />
           <Route path="/activities" element={<ActivitiesPage/>} />
           <Route path="/activity/:id" element={<ActivityPage />} />
+          <Route path="/profile/" element={<ProfilePage />} />
+                        <Route path="/403/" element={<AccessDeniedPage />} />
+                        <Route path="/404/" element={<NotFoundPage />} />
+                        <Route path='*' element={<NotFoundPage />} />
+                        <Route path="/login/" element={<LoginPage />} />
+                        <Route path="/register/" element={<RegisterPage />} />
         </Routes>
 
     </div>
