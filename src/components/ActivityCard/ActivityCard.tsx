@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Не забудьте импортировать Link
-import { T_Activity } from '../../modules/types';
+import { T_Activity } from '../../utils/types';
+import { useAppDispatch } from '../../store';
+import { AddToSelfEmployed, fetchActivities } from '../../slices/activitiesSlice';
+
 
 
 type ActivityCardProps = {
@@ -8,7 +11,13 @@ type ActivityCardProps = {
 };
 
 const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => { 
-    console.log(activity.img_url)
+    const dispatch = useAppDispatch()
+
+    const handeAddToSelfEmployed = async () => {
+        await dispatch(AddToSelfEmployed(String(activity.id)))
+        await dispatch(fetchActivities())
+    }
+
    
     return (
         <div className="services__column" key={activity.id}>
@@ -28,11 +37,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
                     >
                         Подробнее
                     </Link>
-                    {/* <form method="post" action={`/activity/${activity.id}/add_activity/`}>
-                        <button className="main-block__button__add" type="submit">
+                        <button className="main-block__button__add" onClick={handeAddToSelfEmployed}>
                             +
                         </button>
-                    </form> */}
                 </div>
             </div>
         </div>

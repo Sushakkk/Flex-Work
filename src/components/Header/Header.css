@@ -47,6 +47,14 @@
 	text-decoration: none;
 }
 
+
+.user-info{
+	z-index: 3;
+	color: var(--main_color);
+	font-size: 18px;
+
+}
+
 .header__logo img {
 	max-width: 100%;
 	display: block;

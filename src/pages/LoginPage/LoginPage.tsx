@@ -1,8 +1,11 @@
 import {Button, Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from "reactstrap";
 import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "src/store/store.ts";
-import {handleLogin} from "store/slices/userSlice.ts";
+
+
 import {Link, useNavigate} from "react-router-dom"
+import { handleLogin } from "../../slices/userSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
+
 
 export const LoginPage = () => {
 
@@ -23,6 +26,8 @@ export const LoginPage = () => {
             password: passwordField.value
         }
 
+        console.log('login', data)
+
         const result = await dispatch(handleLogin(data))
 
         if (result.type == "login/fulfilled") {
@@ -37,6 +42,9 @@ export const LoginPage = () => {
     }, [isAuthenticated]);
 
     return (
+        <main id="main" className="page">
+        {/* <Breadcrumbs/> */}
+        <div className="page__services _container">
         <Container>
             <Row className="justify-content-center">
                 <Col md="4">
@@ -74,5 +82,7 @@ export const LoginPage = () => {
                 </Col>
             </Row>
         </Container>
+    </div>
+</main>
     );
 };
