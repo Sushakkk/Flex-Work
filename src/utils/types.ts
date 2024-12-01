@@ -1,5 +1,6 @@
 export interface T_SelfEmployed {
-    id: number;
+    self_employed:{
+      id: number;
     user_username: string;
     fio: string;
     inn: string | null;
@@ -8,6 +9,7 @@ export interface T_SelfEmployed {
     completion_date: string | null;
     moderator_username: string;
     status: "draft" | "deleted" | "formed" | "completed" | "rejected";
+    }
     activities: T_Activity_M[]
   }
 

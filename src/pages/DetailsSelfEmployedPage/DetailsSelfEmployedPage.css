@@ -84,24 +84,23 @@
 .item-basket__img {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     min-width: 120px;
     min-height: 70px;
     border-radius: 10px;
     border: 2px solid var(--border);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
-    
 }
 
 .item-basket__img img {
-    
     width: 100%;
-    height: auto; 
-    object-fit: cover; 
+    height: 100%;
+    object-fit: cover;
 }
+
 .item-basket__price {
 
 }

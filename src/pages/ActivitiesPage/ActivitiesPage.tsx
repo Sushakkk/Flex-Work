@@ -3,7 +3,7 @@ import './ActivitiesPage.css';
 import { fetchActivities, setTitle, useActivities, useTitle } from '../../slices/activitiesSlice';
 import { useDispatch } from 'react-redux';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
 import { useActivityCount, useSelfEmployedID } from '../../slices/selfEmployedSlice';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 const ActivitiesPage = () => {
     const [isMock, setIsMock] = useState(false);
   
-    // const [count, setCount] = useState(0);
+    const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
 
 
 
@@ -83,16 +83,27 @@ const ActivitiesPage = () => {
                                 </button>
                             </div>
                         </form>
-                        <Link  to="/self-employed" className="basket-container">
-                            <img
-                                className="basket__img"
-                                src={`http://${currentHost}:9000/flexwork/basket.svg`}
-                                alt="basket"
-                            />
-                            {count > 0 && (
-                                <div className="basket_amount">{count}</div>
-                            )} {/* Условный рендеринг здесь */}
-                        </Link>
+                        
+                        {isAuthenticated ? (
+                            <Link to="/self-employed" className="basket-container">
+                                <img
+                                    className="basket__img"
+                                    src={`http://${currentHost}:9000/flexwork/basket.svg`}
+                                    alt="basket"
+                                />
+                                {count > 0 && (
+                                    <div className="basket_amount">{count}</div>
+                                )}
+                            </Link>
+                        ) : (
+                            <div className="basket-container ">
+                                <img
+                                    className="basket__img disabled"
+                                    src={`http://${currentHost}:9000/flexwork/basket.svg`}
+                                    alt="basket"
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div className="services__cards">
