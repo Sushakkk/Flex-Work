@@ -3,6 +3,7 @@ import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { handleLogout, useFio } from '../../slices/userSlice';
+import User from '../User/User';
 
 
 const Header = () => {
@@ -56,15 +57,23 @@ const Header = () => {
       <div className="header__container _container">
         <Link to="/" className="header__logo">flexwork</Link>
 
+        <div className="user-info-container">
         {isAuthenticated ? (
-          <div className="user-info">
+         <div className="user-info-container">
+           <div className="user-info">
             <span>{fio}</span> 
           </div>
+          <Link to="/profile" className="menu__link menu__link_active">
+            <User/>
+          </Link>
+         </div>
+
         ) : null}
 
         {/* Бургер-меню для мобильных экранов */}
         <div className="header__burger" onClick={toggleMenu}>
           <span></span>
+        </div>
         </div>
 
         <nav className={`header__menu menu ${isMenuOpen ? 'active' : ''}`}>

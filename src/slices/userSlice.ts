@@ -5,6 +5,7 @@ import {AxiosResponse} from "axios";
 import { api } from "../api";
 import { useSelector } from 'react-redux';
 import { RootState } from "../store";
+import { T_UpdateUserData } from "../utils/types";
 
 
 
@@ -20,9 +21,9 @@ const initialState: T_User = {
     checked: false
 }
 
-export const handleCheck = createAsyncThunk<T_User, object, AsyncThunkConfig>(
-    "check",
-    async function() {
+export const handleCheck = createAsyncThunk<T_User, void, { rejectValue: string }>(
+    'user/check',
+    async () => {
         const storedUser = localStorage.getItem('user');
         console.log('user', storedUser);
         
@@ -36,8 +37,7 @@ export const handleCheck = createAsyncThunk<T_User, object, AsyncThunkConfig>(
         const response = await api.user.userLoginCreate({}) as AxiosResponse<T_User>;
         return response.data;
     }
-);
-
+  );
 
 export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
     "login",
@@ -50,8 +50,8 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
                 password
             },
         ) as AxiosResponse<T_User>;
-        console.log(response.data.user);
         localStorage.setItem('user', JSON.stringify(response.data.user))
+        console.log(response.data.user);
         
 
         return response.data.user;
@@ -76,18 +76,42 @@ export const handleLogout = createAsyncThunk<void, object, AsyncThunkConfig>(
     "logout",
     async function() {
         await api.user.userLogoutCreate()
-        // Удаляем данные пользователя из localStorage
         localStorage.removeItem('user');
-
-        
     }
 )
+
+
+export function updateUserInLocalStorage(updatedUserData: T_UpdateUserData) {
+    // Получаем данные пользователя из localStorage
+    const storedUser = localStorage.getItem('user');
+
+    // Если пользователь есть в localStorage
+    if (storedUser) {
+        // Парсим данные пользователя
+        const user: T_User = JSON.parse(storedUser);
+
+        // Обновляем нужные поля
+        user.first_name = updatedUserData.first_name || user.first_name;
+        user.last_name = updatedUserData.last_name || user.last_name;
+        user.username = updatedUserData.username || user.username;
+        user.password = updatedUserData.password || user.password;
+
+        // Перезаписываем данные пользователя в localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('local', localStorage.getItem('user'));
+        
+    } else {
+        console.error("Пользователь не найден в localStorage.");
+    }
+}
+
 
 export const handleUpdateProfile = createAsyncThunk<T_User, object, AsyncThunkConfig>(
     "updateProfile",
     async function(userData:T_RegisterCredentials, thunkAPI) {
         const state = thunkAPI.getState()
         const {username, first_name, last_name, password} = userData
+        updateUserInLocalStorage(userData)
         const response = await api.user.userUpdateUpdate(state.user.id, {
             username,
             first_name,

@@ -1,9 +1,9 @@
-import {Container} from "reactstrap";
+
 
 export const NotFoundPage = () => {
     return (
-        <Container>
+        <div className='home'>
             <h3 className="text-center">Страница не найдена</h3>
-        </Container>
+        </div>
     )
 }

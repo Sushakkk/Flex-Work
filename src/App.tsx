@@ -28,7 +28,7 @@ import { handleCheck } from './slices/userSlice'
 function App() {
   const dispatch = useAppDispatch()
 
-  const {checked} = useAppSelector((state) => state.user)
+  const checked = useAppSelector((state) => state.user)
 
   useEffect(() => {
       dispatch(handleCheck())
@@ -47,10 +47,10 @@ function App() {
           <Route path="/" element={<HomePage/>} />
           <Route path="/activities" element={<ActivitiesPage/>} />
           <Route path="/activity/:id" element={<ActivityPage />} />
-          {/* <Route path="/profile/" element={<ProfilePage />} />
+          <Route path="/profile/" element={<ProfilePage />} />
                         <Route path="/403/" element={<AccessDeniedPage />} />
                         <Route path="/404/" element={<NotFoundPage />} />
-                        <Route path='*' element={<NotFoundPage />} /> */}
+                        <Route path='*' element={<NotFoundPage />} />
                         <Route path="/login/" element={<LoginPage />} />
                         {/* <Route path="/register/" element={<RegisterPage />} /> */}
         </Routes>
