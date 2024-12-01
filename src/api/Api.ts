@@ -552,7 +552,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<SelfEmployedActivities, any>({
-        path: `/self-employed-activities/{s_e_id}/activity/{a_id}/update`,
+        path: `/self-employed-activities/${sEId}/activity/${aId}/update`,
         method: "PUT",
         body: data,
         secure: true,
@@ -571,7 +571,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     selfEmployedActivitiesDeleteDelete: (sEId: string, aId: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/self-employed-activities/{s_e_id}/delete/{a_id}`,
+        path: `/self-employed-activities/${sEId}/delete/${aId}`,
         method: "DELETE",
         secure: true,
         ...params,

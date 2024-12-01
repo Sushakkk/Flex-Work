@@ -85,7 +85,7 @@ const ActivitiesPage = () => {
                             </div>
                         </form>
                         
-                        {isAuthenticated ? (
+                        {isAuthenticated && self_employed_id !== null ? (
                             <Link to={`/self-employed/${self_employed_id}`} className="basket-container">
                                 <img
                                     className="basket__img"

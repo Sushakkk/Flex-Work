@@ -4,6 +4,7 @@ import { api } from '../api';
 import { RootState } from '../store';
 import { T_SelfEmployed, T_SelfEmployedFilters } from '../utils/types';
 import { NEXT_YEAR, PREV_YEAR } from '../utils/consts';
+import {AsyncThunkConfig} from "@reduxjs/toolkit/dist/createAsyncThunk";
 import { useSelector } from 'react-redux';
 
 interface T_SelfEmployedSlice {
@@ -79,13 +80,52 @@ export const deleteSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfi
 export const formSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfig>(
     "self-employed/delete_draft",
     async (id) => {
-
-        console.log("Deleting self-employed with ID:", id); 
-        const response = await api.selfEmployed.selfEmployedUpdateByCreatorUpdate(id); 
-        console.log('del',  response.data);
-    
+         await api.selfEmployed.selfEmployedUpdateByCreatorUpdate(id); 
     }
   );
+  
+  
+  export const deleteActivityFromSelfEmployed = createAsyncThunk<
+  void, // возвращаемый тип
+  { self_employed_id: string, activity_id: string }, // тип параметров
+  AsyncThunkConfig
+>(
+  'self-employed/delete_activity',
+  async ({ self_employed_id, activity_id }) => {
+  
+
+    const response = await api.selfEmployedActivities.selfEmployedActivitiesDeleteDelete(
+        self_employed_id, 
+        activity_id
+      );
+      
+
+    
+  }
+);
+
+
+
+export const updateImportance = createAsyncThunk< 
+void, // возвращаемый тип
+{ self_employed_id: string, activity_id: string, importance: boolean }, // тип параметров
+AsyncThunkConfig
+>(
+'self-employed/update_importance', // исправленный тип действия
+async ({ self_employed_id, activity_id, importance }) => {
+  
+  const data = { importance };
+
+  const response = await api.selfEmployedActivities.selfEmployedActivitiesActivityUpdateUpdate(
+    self_employed_id, 
+    activity_id, 
+    data, // передаем объект данных
+  );
+
+}
+);
+
+
   
   
 
