@@ -44,7 +44,7 @@ const ActivitiesPage = () => {
     useEffect(() => {
         dispatch(fetchActivities())
 
-    }, [])
+    }, [title])
     
     // useEffect(() => {
     //     fetchData();
