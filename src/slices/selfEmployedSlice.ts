@@ -21,40 +21,102 @@ const initialState: T_SelfEmployedSlice = {
     self_employed: [],
     filters: {
         status: 'draft',
-        start_date: PREV_YEAR.toISOString().split('T')[0],
-        end_date: NEXT_YEAR.toISOString().split('T')[0]
+        start_date: '',
+        end_date:''
     },
 };
 
 export const fetchSelfEmployed = createAsyncThunk<T_SelfEmployed, string>(
     'self-employed/id',
     async (self_employed_id) => {
-        const response = await api.selfEmployed.selfEmployedRead(self_employed_id) as AxiosResponse<T_SelfEmployed>;
-        console.log('self-metod', response.data);
+        const response = await api.selfEmployed.selfEmployedRead(self_employed_id) ;
         return response.data;
     }
 );
+
+export const fetchAllSelfEmployed = createAsyncThunk<T_SelfEmployed[], void, { state: RootState }>(
+    "self-employed/fetchAll",
+    async (_, thunkAPI) => {
+        const { filters } = thunkAPI.getState().selfEmployed; // Извлекаем фильтры из состояния
+
+        console.log('get all', filters  );
+        const response = await api.selfEmployed.selfEmployedList({
+            status: filters.status,
+            start_date: filters.start_date,
+            end_date: filters.end_date
+        })
+        console.log('get all', response.data.self_employed  );
+        
+        return response.data.self_employed ;
+    }
+);
+
+export const updateSelfEmployed = createAsyncThunk<void, { id: string, fio: string }, AsyncThunkConfig>(
+    "self-employed/update_self-employed",
+    async ({ id, fio }) => {
+      console.log('self_employed_id in updateSelfEmployed', id);
+      const response = await api.selfEmployed.selfEmployedUpdateUpdate(id, {
+        fio: fio,
+      });
+      console.log('result update', response.data);
+    }
+  );
+
+
+
+
+
+
+export const deleteSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "self-employed/delete_draft",
+    async (id) => {
+        await api.selfEmployed.selfEmployedDeleteDelete(id); 
+    
+    }
+  );
+  
+  
+export const formSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "self-employed/delete_draft",
+    async (id) => {
+
+        console.log("Deleting self-employed with ID:", id); 
+        const response = await api.selfEmployed.selfEmployedUpdateByCreatorUpdate(id); 
+        console.log('del',  response.data);
+    
+    }
+  );
+  
+  
+
+
+
 
 const SelfEmployedSlice = createSlice({
     name: 'self_employed',
     initialState,
     reducers: {
-        saveSelfEmployed: (state, action) => {
-            console.log('Saving self-employed data', action.payload); // Логируем данные
+        saveSelfEmployed: (state, action: PayloadAction<{ self_employed_id: number, activity_count: number }>) => {
             state.self_employed_id = action.payload.self_employed_id;
             state.activity_count = action.payload.activity_count;
+        },
+        updateFilters: (state, action: PayloadAction<T_SelfEmployedFilters>) => {
+            state.filters = action.payload; // Обновляем фильтры в состоянии
         },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSelfEmployed.fulfilled, (state, action: PayloadAction<T_SelfEmployed>) => {
             state.detail_self_employed = action.payload;
         });
+        builder.addCase(fetchAllSelfEmployed.fulfilled, (state, action: PayloadAction<T_SelfEmployed[]>) => {
+            state.self_employed = action.payload;
+        });
     },
 });
 
-export const useSelfEmployedID = () => useSelector((state: RootState) => state.selfEmployed.self_employed_id);
-export const useActivityCount = () => useSelector((state: RootState) => state.selfEmployed.activity_count);
 
-export const { saveSelfEmployed } = SelfEmployedSlice.actions;
+export const useSelfEmployedID= () => useSelector((state: RootState) => state.selfEmployed.self_employed_id);
+export const useActivityCount= () => useSelector((state: RootState) => state.selfEmployed.activity_count);
+export const { saveSelfEmployed, updateFilters } = SelfEmployedSlice.actions;
 
 export default SelfEmployedSlice.reducer;

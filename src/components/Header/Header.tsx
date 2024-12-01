@@ -91,11 +91,11 @@ const Header = () => {
                 Деятельности
               </Link>
             </li>
-            {/* <li className="menu__item">
+            <li className="menu__item">
               <Link to="/self-employed" className="menu__link menu__link_active">
-                Самозанятый
+                Самозанятые
               </Link>
-            </li> */}
+            </li>
 
             {/* Дополнительные ссылки */}
             {isAuthenticated ? (

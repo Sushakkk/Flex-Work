@@ -13,6 +13,7 @@ const ActivitiesPage = () => {
     const [isMock, setIsMock] = useState(false);
   
     const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
+    const self_employed_id = useAppSelector((state) => state.selfEmployed.self_employed_id);
 
 
 
@@ -85,7 +86,7 @@ const ActivitiesPage = () => {
                         </form>
                         
                         {isAuthenticated ? (
-                            <Link to="/self-employed" className="basket-container">
+                            <Link to={`/self-employed/${self_employed_id}`} className="basket-container">
                                 <img
                                     className="basket__img"
                                     src={`http://${currentHost}:9000/flexwork/basket.svg`}

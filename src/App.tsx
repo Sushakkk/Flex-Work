@@ -22,6 +22,8 @@ import RegisterPage from './pages/RegisterPage'
 import { useAppDispatch, useAppSelector } from './store'
 import { handleCheck } from './slices/userSlice'
 import DetailsSelfEmployedPage from './pages/DetailsSelfEmployedPage/DetailsSelfEmployedPage';
+import SelfEmployedPage from './pages/SelfEmployedPage';
+
 
 
 
@@ -49,7 +51,8 @@ function App() {
           <Route path="/activities" element={<ActivitiesPage/>} />
           <Route path="/activity/:id" element={<ActivityPage />} />
           <Route path="/profile/" element={<ProfilePage />} />
-          <Route path="/self-employed" element={<DetailsSelfEmployedPage/>} />
+          <Route path="/self-employed/:id" element={<DetailsSelfEmployedPage/>} />
+          <Route path="/self-employed/" element={<SelfEmployedPage/>} />
           <Route path="/403/" element={<AccessDeniedPage />} />
           <Route path="/404/" element={<NotFoundPage />} />
           <Route path='*' element={<NotFoundPage />} />

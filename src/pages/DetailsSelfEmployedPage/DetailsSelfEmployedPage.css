@@ -13,6 +13,18 @@
 
 
 
+
+.basket_fio_container{
+    display: flex;
+    align-items: center;
+    gap:20px
+}
+
+.basket_fio_container input{
+    width: 350px;
+}
+
+
 .basket__title{
     font-size: 36px;
     gap:20px;
@@ -100,6 +112,14 @@
     height: 100%;
     object-fit: cover;
 }
+
+.button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+
 
 .item-basket__price {
 
