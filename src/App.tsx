@@ -21,6 +21,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { useAppDispatch, useAppSelector } from './store'
 import { handleCheck } from './slices/userSlice'
+import DetailsSelfEmployedPage from './pages/DetailsSelfEmployedPage/DetailsSelfEmployedPage';
 
 
 
@@ -48,11 +49,12 @@ function App() {
           <Route path="/activities" element={<ActivitiesPage/>} />
           <Route path="/activity/:id" element={<ActivityPage />} />
           <Route path="/profile/" element={<ProfilePage />} />
-                        <Route path="/403/" element={<AccessDeniedPage />} />
-                        <Route path="/404/" element={<NotFoundPage />} />
-                        <Route path='*' element={<NotFoundPage />} />
-                        <Route path="/login/" element={<LoginPage />} />
-                        {/* <Route path="/register/" element={<RegisterPage />} /> */}
+          <Route path="/self-employed" element={<DetailsSelfEmployedPage/>} />
+          <Route path="/403/" element={<AccessDeniedPage />} />
+          <Route path="/404/" element={<NotFoundPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+          <Route path="/login/" element={<LoginPage />} />
+          <Route path="/register/" element={<RegisterPage />} />
         </Routes>
 
     </div>

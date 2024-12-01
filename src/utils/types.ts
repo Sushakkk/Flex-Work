@@ -8,9 +8,19 @@ export interface T_SelfEmployed {
     completion_date: string | null;
     moderator_username: string;
     status: "draft" | "deleted" | "formed" | "completed" | "rejected";
+    activities: T_Activity_M[]
   }
 
 
+
+
+  export interface T_Activity_M {
+    id: number;
+    title: string;
+    img_url: string;
+    importance:boolean
+  }
+  
 
   export type T_SelfEmployedFilters = {
     start_date: string

@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import { useAppDispatch } from '../../store';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
 import { useActivityCount, useSelfEmployedID } from '../../slices/selfEmployedSlice';
+import { Link } from 'react-router-dom';
 
 
 const ActivitiesPage = () => {
@@ -82,7 +83,7 @@ const ActivitiesPage = () => {
                                 </button>
                             </div>
                         </form>
-                        <div className="basket-container">
+                        <Link  to="/self-employed" className="basket-container">
                             <img
                                 className="basket__img"
                                 src={`http://${currentHost}:9000/flexwork/basket.svg`}
@@ -91,7 +92,7 @@ const ActivitiesPage = () => {
                             {count > 0 && (
                                 <div className="basket_amount">{count}</div>
                             )} {/* Условный рендеринг здесь */}
-                        </div>
+                        </Link>
                     </div>
 
                     <div className="services__cards">
