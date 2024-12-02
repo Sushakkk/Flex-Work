@@ -32,6 +32,7 @@ function App() {
   const dispatch = useAppDispatch()
 
   const checked = useAppSelector((state) => state.user)
+  console.log('check', checked)
 
   useEffect(() => {
       dispatch(handleCheck())

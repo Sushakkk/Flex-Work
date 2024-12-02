@@ -15,6 +15,7 @@ const initialState: T_User = {
 	id: -1,
 	first_name: "",
 	last_name: "",
+    password:"",
 	is_authenticated: false,
     validation_error: false,
     validation_success: false,
@@ -51,7 +52,7 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
             },
         ) as AxiosResponse<T_User>;
         localStorage.setItem('user', JSON.stringify(response.data.user))
-        console.log(response.data.user);
+        console.log('user', response.data.user);
         
 
         return response.data.user;
@@ -76,6 +77,8 @@ export const handleLogout = createAsyncThunk<void, object, AsyncThunkConfig>(
     "logout",
     async function() {
         await api.user.userLogoutCreate()
+        console.log('out');
+        
         localStorage.removeItem('user');
     }
 )
@@ -139,6 +142,7 @@ const userlice = createSlice({
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.password = action.payload.password
         });
         builder.addCase(handleRegister.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true
@@ -146,6 +150,7 @@ const userlice = createSlice({
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.password = action.payload.password
          
         });
         builder.addCase(handleLogout.fulfilled, (state:T_User) => {
@@ -154,6 +159,7 @@ const userlice = createSlice({
             state.username = ""
             state.first_name = ""
             state.last_name = ""
+            state.password = ""
             state.validation_error = false
         });
         builder.addCase(handleCheck.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
@@ -162,6 +168,7 @@ const userlice = createSlice({
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.password = action.payload.password
             state.checked = true
         });
         builder.addCase(handleCheck.rejected, (state:T_User) => {
@@ -170,6 +177,7 @@ const userlice = createSlice({
             state.username = ""
             state.first_name = ""
             state.last_name = ""
+            state.password = ""
             state.validation_error = false
             state.checked = true
         });
@@ -178,6 +186,7 @@ const userlice = createSlice({
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.password = action.payload.password
             state.validation_error = false
             state.validation_success = true
         });

@@ -93,6 +93,7 @@ export type T_User = {
   id: number
   first_name: string
   last_name: string
+  password: string
   is_authenticated: boolean
   validation_error: boolean
   validation_success: boolean
@@ -100,86 +101,3 @@ export type T_User = {
 }
 
 
-
-  
-//   export interface SelfEmployedActivities {
-//     /** ID */
-//     id: number;
-//     self_employed: SelfEmployed;
-//     activities: Activities;
-//     /** Главная деятельность */
-//     importance: boolean;
-//     /** Деятельность */
-//     activity: number;
-//   }
-  
-//   export interface UserLogin {
-//     /**
-//      * Username
-//      * @minLength 1
-//      */
-//     username: string;
-//     /**
-//      * Password
-//      * @minLength 1
-//      */
-//     password: string;
-//   }
-  
-//   export interface UserRegister {
-//     /** ID */
-//     id: number;
-//     /**
-//      * Имя
-//      * @maxLength 150
-//      */
-//     first_name: string;
-//     /**
-//      * Фамилия
-//      * @maxLength 150
-//      */
-//     last_name: string;
-//     /**
-//      * Имя пользователя
-//      * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-//      * @minLength 1
-//      * @maxLength 150
-//      * @pattern ^[\w.@+-]+$
-//      */
-//     username: string;
-//     /**
-//      * Пароль
-//      * @minLength 1
-//      * @maxLength 128
-//      */
-//     password: string;
-//   }
-  
-//   export interface User {
-//     /** ID */
-//     id: number;
-//     /**
-//      * Адрес электронной почты
-//      * @format email
-//      * @maxLength 254
-//      */
-//     email: string;
-//     /**
-//      * Имя
-//      * @maxLength 150
-//      */
-//     first_name: string;
-//     /**
-//      * Фамилия
-//      * @maxLength 150
-//      */
-//     last_name: string;
-//     /**
-//      * Имя пользователя
-//      * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-//      * @minLength 1
-//      * @maxLength 150
-//      * @pattern ^[\w.@+-]+$
-//      */
-//     username: string;
-//   }

@@ -5,13 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import CustomInput from "../../components/CustomInput";
 
 export const ProfilePage = () => {
-    const { username, first_name, last_name, validation_error, validation_success, checked } = useAppSelector((state) => state.user);
+    const { username, first_name, last_name, password="", validation_error, validation_success, checked } = useAppSelector((state) => state.user);
 
     // Инициализация состояния с данными из Redux
     const [inputUsername, setInputUsername] = useState(username);
     const [inputFirstName, setInputFirstName] = useState(first_name);
     const [inputLastName, setInputLastName] = useState(last_name);
-    const [inputPassword, setInputPassword] = useState("");
+    const [inputPassword, setInputPassword] = useState(password);
 
     const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [isFirstNameValid, setIsFirstNameValid] = useState(true);
@@ -32,7 +32,7 @@ export const ProfilePage = () => {
         const isUsernameValid = inputUsername.length !== 0;
         const isFirstNameValid = inputFirstName.length !== 0;
         const isLastNameValid = inputLastName.length !== 0;
-        const isPasswordValid = inputPassword.length > 0 || inputPassword.length === 0; // Password is optional
+        const isPasswordValid = inputPassword.length !== 0; // Password is optional
 
         setIsUsernameValid(isUsernameValid);
         setIsFirstNameValid(isFirstNameValid);
@@ -101,7 +101,7 @@ export const ProfilePage = () => {
                         required={false}
                         disabled={false}
                     />
-                    {/* <CustomInput
+                    <CustomInput
                         label="Пароль"
                         placeholder="Введите новый пароль"
                         value={inputPassword}
@@ -110,7 +110,7 @@ export const ProfilePage = () => {
                         valid={isPasswordValid}
                         required={false}
                         disabled={false}
-                    /> */}
+                    />
                     <Button type="submit" color="primary" className="mt-3">
                         Сохранить
                     </Button>
