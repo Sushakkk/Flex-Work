@@ -25,16 +25,16 @@ const initialState: T_User = {
 export const handleCheck = createAsyncThunk<T_User, void, { rejectValue: string }>(
     'user/check',
     async () => {
-        const storedUser = localStorage.getItem('user');
-        console.log('user', storedUser);
+        // const storedUser = localStorage.getItem('user');
+        // console.log('user', storedUser);
         
         
-        if (storedUser) {
-            // Если данные есть в localStorage, возвращаем их
-            return JSON.parse(storedUser);
-        }
+        // if (storedUser) {
+           
+        //     return JSON.parse(storedUser);
+        // }
         
-        // Если данных нет, отправляем запрос на сервер
+
         const response = await api.user.userLoginCreate({}) as AxiosResponse<T_User>;
         return response.data;
     }
@@ -51,8 +51,8 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
                 password
             },
         ) as AxiosResponse<T_User>;
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        console.log('user', response.data.user);
+        // localStorage.setItem('user', JSON.stringify(response.data.user))
+        // console.log('user', response.data.user);
         
 
         return response.data.user;
@@ -69,6 +69,9 @@ export const handleRegister = createAsyncThunk<T_User, object, AsyncThunkConfig>
             password
         }) as AxiosResponse<T_User>
 
+        // localStorage.setItem('user', JSON.stringify(response.data))
+        
+
         return response.data
     }
 )
@@ -79,7 +82,7 @@ export const handleLogout = createAsyncThunk<void, object, AsyncThunkConfig>(
         await api.user.userLogoutCreate()
         console.log('out');
         
-        localStorage.removeItem('user');
+        // localStorage.removeItem('user');
     }
 )
 
@@ -114,7 +117,7 @@ export const handleUpdateProfile = createAsyncThunk<T_User, object, AsyncThunkCo
     async function(userData:T_RegisterCredentials, thunkAPI) {
         const state = thunkAPI.getState()
         const {username, first_name, last_name, password} = userData
-        updateUserInLocalStorage(userData)
+        // updateUserInLocalStorage(userData)
         const response = await api.user.userUpdateUpdate(state.user.id, {
             username,
             first_name,

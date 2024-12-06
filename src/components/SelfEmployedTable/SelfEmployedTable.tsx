@@ -30,6 +30,11 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
         accessor: "id", // используем id как уникальный идентификатор
       },
       {
+        Header: "Пользователь",
+        accessor: "user_username", // статус
+        Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
+      },
+      {
         Header: "Статус",
         accessor: "status", // статус
         Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
@@ -44,6 +49,11 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
         accessor: "completion_date", // поле для даты завершения
         Cell: ({ value }: { value: string }) => value ? formatDate(value) : "--",
       },
+      {
+        Header: "ИНН",
+        accessor: "inn", // поле для даты завершения
+        Cell: ({ value }: { value: string }) => value ? value : "",
+      }
     ],
     []
   );
