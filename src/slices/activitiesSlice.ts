@@ -128,6 +128,9 @@ const activitiesSlice = createSlice({
         },
         clearActivity(state){
             state.selectedActivity=null;
+        },
+        clearNewActivity(state){
+            state.new_activity=false;
         }
     },
     extraReducers: (builder) => {
@@ -149,6 +152,7 @@ export const {
     clearTitle,
     setNewActivity,
     clearActivity,
+    clearNewActivity,
 } = activitiesSlice.actions;
 
 export default activitiesSlice.reducer;
