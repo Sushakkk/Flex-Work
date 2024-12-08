@@ -19,7 +19,8 @@ const initialState: T_User = {
 	is_authenticated: false,
     validation_error: false,
     validation_success: false,
-    checked: false
+    checked: false,
+    is_staff: false
 }
 
 export const handleCheck = createAsyncThunk<T_User, void, { rejectValue: string }>(
@@ -51,8 +52,11 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
                 password
             },
         ) as AxiosResponse<T_User>;
-        // localStorage.setItem('user', JSON.stringify(response.data.user))
-        // console.log('user', response.data.user);
+        
+
+        console.log('user', response.data.user);
+        console.log('user staff', response.data.user.is_staff);
+        
         
 
         return response.data.user;
@@ -146,6 +150,7 @@ const userlice = createSlice({
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
             state.password = action.payload.password
+            state.is_staff= action.payload.is_staff
         });
         builder.addCase(handleRegister.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true

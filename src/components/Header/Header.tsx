@@ -26,6 +26,7 @@ const Header = () => {
 
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
+  const isStaff= useAppSelector((state) => state.user.is_staff);
   const username = useAppSelector((state) => state.user.username);
   const navigate = useNavigate();
 
@@ -86,11 +87,19 @@ const Header = () => {
               }
             }}
           >
+            {isStaff ? (
             <li className="menu__item">
-              <Link to="/activities" className="menu__link menu__link_active">
+              <Link to="/edit-activities" className="menu__link menu__link_active">
                 Деятельности
               </Link>
-            </li>
+            </li>): (
+               <li className="menu__item">
+               <Link to="/activities" className="menu__link menu__link_active">
+                 Деятельности
+               </Link>
+             </li>
+
+            )}
             
 
             {/* Дополнительные ссылки */}
