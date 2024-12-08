@@ -13,7 +13,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ activities }) => {
   const navigate = useNavigate();
 
   const handleClick = (activity_id: number): void => {
-    navigate(`/activity/${activity_id}`);
+    navigate(`/edit-activity/${activity_id}`);
   };
 
   const statuses: Record<string, string> = {

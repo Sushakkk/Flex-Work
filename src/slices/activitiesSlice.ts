@@ -13,12 +13,14 @@ interface T_ActivitiesSlice {
     activities: T_Activity[];
     selectedActivity: null | T_Activity
     title?: string;
+    new_activity: boolean;
 }
 
 const initialState: T_ActivitiesSlice = {
     activities: [],
     title: '',
-    selectedActivity: null
+    selectedActivity: null,
+    new_activity: false
 };
 
 
@@ -73,6 +75,41 @@ export const AddToSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfig
         await api.activities.activitiesAddToSelfEmployedCreate(id)
     }
 )
+export const deleteActivity = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "activities/delete",
+    async function(id) {
+        await api.activities.activitiesDeleteDelete(id)
+    }
+)
+export const EditActivity = createAsyncThunk<void, { id: string, data: { title: string, description: string, category: string, pic?: File } }, AsyncThunkConfig>(
+    "activities/update",
+    async function({ id, data }) {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('category', data.category);
+      if (data.pic) {
+        formData.append('pic', data.pic);
+      }
+  
+      await api.activities.activitiesUpdateUpdate(id, formData);
+    }
+  );
+
+  export const AddActivity = createAsyncThunk<void, { data: { title: string, description: string, category: string, pic?: File } }, AsyncThunkConfig>(
+    "activities/add",
+    async function({ data }) {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('category', data.category);
+      if (data.pic) {
+        formData.append('pic', data.pic);
+      }
+  
+      await api.activities.activitiesCreateCreate(formData); 
+    }
+  );
 
 
 
@@ -83,9 +120,15 @@ const activitiesSlice = createSlice({
         setTitle(state, action: PayloadAction<string>) {
             state.title = action.payload;
         },
+        setNewActivity(state, action: PayloadAction<boolean>) {
+            state.new_activity = action.payload;
+        },
         clearTitle(state) {
             state.title = '';
         },
+        clearActivity(state){
+            state.selectedActivity=null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchActivities.fulfilled, (state:T_ActivitiesSlice, action: PayloadAction<T_Activity[]>) => {
@@ -104,6 +147,8 @@ export const useActivity= () => useSelector((state: RootState) => state.activiti
 export const {
     setTitle,
     clearTitle,
+    setNewActivity,
+    clearActivity,
 } = activitiesSlice.actions;
 
 export default activitiesSlice.reducer;

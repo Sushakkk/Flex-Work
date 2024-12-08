@@ -3,25 +3,20 @@ import { Col, Container, Form, Input, Row } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { T_SelfEmployedFilters } from "../../utils/types";
-import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
-import SelfEmployedTable from "../../components/SelfEmployedTable/SelfEmployedTable";
+
 import { fetchAllSelfEmployed, updateFilters } from "../../slices/selfEmployedSlice";
 import ActivitiesTable from "../../components/ActivitiesTable";
+import { clearActivity, fetchActivities, setNewActivity } from "../../slices/activitiesSlice";
 
-// Объект с возможными статусами
-const statuses: Record<string, string> = {
-  draft: "Черновик",
-  deleted: "Удалена",
-  formed: "Сформирована",
-  completed: "Завершена",
-  rejected: "Отклонена",
-};
+
 
 const EditActivitiesPage = () => {
   const dispatch = useAppDispatch();
 
   const activities = useAppSelector((state) => state.activities.activities);
   const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated);
+  const isStaff = useAppSelector((state) => state.user.is_staff);
+
   const filters = useAppSelector<T_SelfEmployedFilters>((state) => state.selfEmployed.filters);
 
   const navigate = useNavigate();
@@ -30,18 +25,37 @@ const EditActivitiesPage = () => {
   const [dateFormationStart, setDateFormationStart] = useState(""); 
   const [dateFormationEnd, setDateFormationEnd] = useState( ""); 
 
-  const statusOptions = {
-    "": "Любой", 
-    formed: "Сформирована",
-    completed: "Завершена",
-    rejected: "Отклонена",
+
+  const handleAddClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(setNewActivity(true))
+
+
+      navigate('/edit-activity/null');
   };
 
-//   useEffect(() => {
-//     if (!isAuthenticated) {
-//       navigate("/403/");
-//     }
-//   }, [isAuthenticated, navigate]);
+  const statusOptions = {
+    "": "Любой", 
+    active: "Активна",
+    deleted: "Удалена",
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/403/");
+    }
+  }, [isAuthenticated, navigate]);
+
+
+useEffect(()=>{
+  if (!isStaff) {
+    navigate('/404')
+  }
+  dispatch(fetchActivities())
+  dispatch(clearActivity())
+},[])
+
+
 
   // Эффект для загрузки данных самозанятых при изменении фильтров
   useEffect(() => {
@@ -60,7 +74,7 @@ const EditActivitiesPage = () => {
     <main id="main" className="page">
       <div className="page__services _container">
         <Container>
-          <Form>
+          {/* <Form>
             <Row className="mb-4 d-flex align-items-center">
               <Col md="2" className="d-flex flex-row gap-3 align-items-center">
                 <label>От</label>
@@ -87,13 +101,19 @@ const EditActivitiesPage = () => {
                 />
               </Col>
             </Row>
-          </Form>
+          </Form> */}
 
           {activities.length ? (
             <ActivitiesTable activities={activities} />
           ) : (
             <h3 className="text-center mt-5">Самозанятые не найдены</h3>
           )}
+
+<Row className="mt-5">
+            <Col className="d-flex gap-5 justify-content-center">
+              <button  className="button-page grey" onClick={handleAddClick}>Добавить</button>
+            </Col>
+          </Row>
         </Container>
       </div>
     </main>

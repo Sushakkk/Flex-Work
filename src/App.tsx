@@ -24,6 +24,7 @@ import { handleCheck } from './slices/userSlice'
 import DetailsSelfEmployedPage from './pages/DetailsSelfEmployedPage/DetailsSelfEmployedPage';
 import SelfEmployedPage from './pages/SelfEmployedPage';
 import EditActivitiesPage from './pages/EditActivitiesPage';
+import EditActivityPage from './pages/EditActivityPage/EditActivityPage';
 
 
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/activities" element={<ActivitiesPage/>} />
           <Route path="/edit-activities" element={<EditActivitiesPage/>} />
           <Route path="/activity/:id" element={<ActivityPage />} />
+          <Route path="/edit-activity/:id" element={<EditActivityPage />} />
           <Route path="/profile/" element={<ProfilePage />} />
           <Route path="/self-employed/:id" element={<DetailsSelfEmployedPage/>} />
           <Route path="/self-employed/" element={<SelfEmployedPage/>} />
