@@ -23,7 +23,8 @@ const initialState: T_SelfEmployedSlice = {
     filters: {
         status: 'draft',
         start_date: '',
-        end_date:''
+        end_date:'',
+        username:''
     },
 };
 
@@ -81,6 +82,14 @@ export const formSelfEmployed = createAsyncThunk<void, string, AsyncThunkConfig>
     "self-employed/delete_draft",
     async (id) => {
          await api.selfEmployed.selfEmployedUpdateByCreatorUpdate(id); 
+    }
+  );
+export const updateByModeratorHandler= createAsyncThunk<void,  { id: string, status: string }, AsyncThunkConfig>(
+    "self-employed/modetator",
+    async ({id, status}) => {
+         await api.selfEmployed.selfEmployedUpdateByModeratorUpdate(id, {
+            status: status,
+          }); 
     }
   );
   

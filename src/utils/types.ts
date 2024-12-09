@@ -28,6 +28,7 @@ export interface T_SelfEmployed {
     start_date: string
     end_date: string
     status: string
+    username: string
 }
   
   export type T_Activities = {

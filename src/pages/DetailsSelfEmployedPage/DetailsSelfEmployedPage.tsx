@@ -5,6 +5,7 @@ import {
   deleteSelfEmployed,
   fetchSelfEmployed,
   formSelfEmployed,
+  updateByModeratorHandler,
   updateImportance,
   updateSelfEmployed
 } from '../../slices/selfEmployedSlice';
@@ -18,6 +19,7 @@ const DetailsSelfEmployedPage = () => {
   const { id } = useParams<{ id: string }>();
 
   const self_employed = useAppSelector((state) => state.selfEmployed.detail_self_employed);
+  const isStaff = useAppSelector((state) => state.user.is_staff);
 
   const [fio, setFio] = useState('');
   const [isDeleted, setIsDeleted] = useState(false);
@@ -25,10 +27,10 @@ const DetailsSelfEmployedPage = () => {
   const [isdeleteM, setDeleteM] = useState(false);
 
   const status = self_employed?.self_employed?.status;
+  
 
   useEffect(() => {
     dispatch(fetchSelfEmployed(String(id)));
-    console.log('red', self_employed);
   }, [dispatch, id, isDeleted, isForm, isdeleteM]);
 
   useEffect(() => {
@@ -44,7 +46,6 @@ const DetailsSelfEmployedPage = () => {
       fio: fio,
     };
 
-    console.log('id', id);
     await dispatch(updateSelfEmployed({ id: id, fio: data.fio }));
   };
 
@@ -68,34 +69,41 @@ const DetailsSelfEmployedPage = () => {
     }
   };
 
+  const ModeratorHandler = async (status: string) => {
+    if (id) {
+      await dispatch(updateByModeratorHandler({ id: id, status: status }));
+      setIsForm(true);
+      navigate('/self-employed');
+    } else {
+      console.error('ID не найден');
+    }
+  };
+
   const deleteActivityFromSelfEmployedHandler = async (activity_id) => {
     if (id) {
       console.log('Deleting activity with ID:', activity_id);
-      
+
       // Удаление активности
       await dispatch(deleteActivityFromSelfEmployed({ self_employed_id: id, activity_id }));
-  
+
       // Обновление состояния (например, isdeleteM) после выполнения действия
       setDeleteM(true);  // Это состояние может быть в useState
-  
+
       // Обновление данных
       await dispatch(fetchSelfEmployed(String(id)));
-  
-    
     }
   };
 
   const handleCheckboxChange = async (activityId, importance) => {
     // Обновляем важность через asyncThunk
-    await dispatch(updateImportance({ 
-      self_employed_id: id, 
-      activity_id: activityId, 
-      importance: importance 
+    await dispatch(updateImportance({
+      self_employed_id: id,
+      activity_id: activityId,
+      importance: importance
     }));
 
     await dispatch(fetchSelfEmployed(String(id)));
   };
-  
 
   if (!self_employed || id === 'null') {
     return (
@@ -118,7 +126,6 @@ const DetailsSelfEmployedPage = () => {
               value={fio}
               onChange={(e) => setFio(e.target.value)}
               placeholder="Введите ФИО"
-              
             />
             <button onClick={saveFields} className="button-page grey" type="submit">Сохранить</button>
           </div>
@@ -140,12 +147,12 @@ const DetailsSelfEmployedPage = () => {
                     />
                   ) : (
                     <input
-                    type="checkbox"
-                    className='checkbox'
-                    checked={activity.importance} // если важность активности true, чекбокс будет отмечен
-                    onChange={() => handleCheckboxChange(activity.id, !activity.importance)} // инвертируем значение importance
-                    id={`checkbox-${activity.id}`}
-                  />
+                      type="checkbox"
+                      className='checkbox'
+                      checked={activity.importance} // если важность активности true, чекбокс будет отмечен
+                      onChange={() => handleCheckboxChange(activity.id, !activity.importance)} // инвертируем значение importance
+                      id={`checkbox-${activity.id}`}
+                    />
                   )}
 
                   <div className="item-basket__price-button">
@@ -176,11 +183,19 @@ const DetailsSelfEmployedPage = () => {
           </div>
         </div>
 
-        {status === 'draft' && activities.length!==0 && (
+        {status === 'draft' && activities.length !== 0 && (
           <Row className="mt-5">
             <Col className="d-flex gap-5 justify-content-center">
-              <button  className="button-page grey" onClick={formSelfEmployedHandler}>Сформировать</button>
-              <button  className="button-page grey" onClick={deleteSelfEmployedHandler}>Удалить</button>
+              <button className="button-page grey" onClick={formSelfEmployedHandler}>Сформировать</button>
+              <button className="button-page grey" onClick={deleteSelfEmployedHandler}>Удалить</button>
+            </Col>
+          </Row>
+        )}
+        {isStaff && status !== 'completed' && status !== 'rejected' && (
+          <Row className="mt-5">
+            <Col className="d-flex gap-5 justify-content-center">
+              <button className="button-page grey" onClick={() => ModeratorHandler('completed')}>Завершить</button>
+              <button className="button-page grey" onClick={() => ModeratorHandler('rejected')}>Отклонить</button>
             </Col>
           </Row>
         )}

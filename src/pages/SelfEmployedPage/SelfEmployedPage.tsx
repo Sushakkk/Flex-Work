@@ -7,7 +7,6 @@ import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
 import SelfEmployedTable from "../../components/SelfEmployedTable/SelfEmployedTable";
 import { fetchAllSelfEmployed, updateFilters } from "../../slices/selfEmployedSlice";
 
-// Объект с возможными статусами
 const statuses: Record<string, string> = {
   draft: "Черновик",
   deleted: "Удалена",
@@ -25,10 +24,10 @@ const SelfEmployedPage = () => {
 
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState(""); // По умолчанию пустой статус
+  const [status, setStatus] = useState(""); 
   const [dateFormationStart, setDateFormationStart] = useState(""); 
   const [dateFormationEnd, setDateFormationEnd] = useState(""); 
-  const [username, setUsername] = useState(""); // Новое состояние для имени пользователя
+  const [username, setUsername] = useState(""); 
 
   const statusOptions = {
     "": "Любой", 
@@ -37,23 +36,31 @@ const SelfEmployedPage = () => {
     rejected: "Отклонена",
   };
 
-//   useEffect(() => {
-//     if (!isAuthenticated) {
-//       navigate("/403/");
-//     }
-//   }, [isAuthenticated, navigate]);
-
-  // Эффект для загрузки данных самозанятых при изменении фильтров
+  // Эффект для проверки аутентификации
   useEffect(() => {
-    // Обновляем фильтры в хранилище
-    const updatedFilters: T_SelfEmployedFilters = {
-      status: status || "", 
-      start_date: dateFormationStart || "", 
-      end_date: dateFormationEnd || "", 
+    if (!isAuthenticated) {
+      navigate("/403/");
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Эффект для выполнения short polling
+  useEffect(() => {
+    const updateSelfEmployedData = () => {
+      const updatedFilters: T_SelfEmployedFilters = {
+        status: status || "", 
+        start_date: dateFormationStart || "", 
+        end_date: dateFormationEnd || "", 
+      };
+
+      dispatch(updateFilters(updatedFilters)); // Обновляем фильтры
+      dispatch(fetchAllSelfEmployed()); // Запрашиваем новые данные
     };
-    
-    dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
-    dispatch(fetchAllSelfEmployed()); // Загружаем данные с примененными фильтрами
+
+    updateSelfEmployedData(); // Initial fetch
+
+    const intervalId = setInterval(updateSelfEmployedData, 5000); // Повторный запрос каждые 5 секунд
+
+    return () => clearInterval(intervalId); // Очистка интервала при размонтировании компонента
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
 
   // Фильтрация самозанятых по имени пользователя
@@ -72,7 +79,7 @@ const SelfEmployedPage = () => {
                 <Input
                   type="date"
                   value={dateFormationStart}
-                  onChange={(e) => setDateFormationStart(e.target.value)} // Обновляем дату начала
+                  onChange={(e) => setDateFormationStart(e.target.value)} 
                 />
               </Col>
               <Col md="2" className="d-flex flex-row gap-3 align-items-center">
@@ -80,14 +87,14 @@ const SelfEmployedPage = () => {
                 <Input
                   type="date"
                   value={dateFormationEnd}
-                  onChange={(e) => setDateFormationEnd(e.target.value)} // Обновляем дату окончания
+                  onChange={(e) => setDateFormationEnd(e.target.value)} 
                 />
               </Col>
               <Col md="3">
                 <CustomDropdown
                   label="Статус"
                   selectedItem={status}
-                  setSelectedItem={setStatus} // Обновляем статус
+                  setSelectedItem={setStatus} 
                   options={statusOptions}
                 />
               </Col>
@@ -96,7 +103,7 @@ const SelfEmployedPage = () => {
                   type="text"
                   placeholder="Имя пользователя"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)} // Обновляем имя пользователя
+                  onChange={(e) => setUsername(e.target.value)} 
                 />
               </Col>
             </Row>
