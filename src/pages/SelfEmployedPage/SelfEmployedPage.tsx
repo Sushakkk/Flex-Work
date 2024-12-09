@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import { Col, Container, Form, Input, Row } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -25,9 +25,10 @@ const SelfEmployedPage = () => {
 
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState( ""); // По умолчанию пустой статус
+  const [status, setStatus] = useState(""); // По умолчанию пустой статус
   const [dateFormationStart, setDateFormationStart] = useState(""); 
-  const [dateFormationEnd, setDateFormationEnd] = useState( ""); 
+  const [dateFormationEnd, setDateFormationEnd] = useState(""); 
+  const [username, setUsername] = useState(""); // Новое состояние для имени пользователя
 
   const statusOptions = {
     "": "Любой", 
@@ -54,6 +55,11 @@ const SelfEmployedPage = () => {
     dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
     dispatch(fetchAllSelfEmployed()); // Загружаем данные с примененными фильтрами
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
+
+  // Фильтрация самозанятых по имени пользователя
+  const filteredSelfEmployed = all_self_employed.filter((item) =>
+    item.user_username.toLowerCase().includes(username.toLowerCase())
+  );
 
   return (
     <main id="main" className="page">
@@ -85,11 +91,19 @@ const SelfEmployedPage = () => {
                   options={statusOptions}
                 />
               </Col>
+              <Col md="3">
+                <Input
+                  type="text"
+                  placeholder="Имя пользователя"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)} // Обновляем имя пользователя
+                />
+              </Col>
             </Row>
           </Form>
 
-          {all_self_employed.length ? (
-            <SelfEmployedTable all_self_employed={all_self_employed} />
+          {filteredSelfEmployed.length ? (
+            <SelfEmployedTable all_self_employed={filteredSelfEmployed} />
           ) : (
             <h3 className="text-center mt-5">Самозанятые не найдены</h3>
           )}
