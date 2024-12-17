@@ -1,9 +1,10 @@
 
 
 .table__header{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     background-color: var(--base);
+    justify-items: center;
     padding: 15px;
 
 }
@@ -23,20 +24,17 @@
     
 }
 .table__card {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;  */
-    display: flex;
-    gap: 20px; 
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Оптимизировано для 6 колонок */
     width: 100%;
+    justify-items: center;
     align-items: center;
-   justify-content: space-between;
+    gap: 20px; /* Расстояние между элементами */
     border: 2px solid var(--border);
     padding: 20px 30px;
     border-radius: 20px;
     background-color: var(--base);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-    
 }
 
 

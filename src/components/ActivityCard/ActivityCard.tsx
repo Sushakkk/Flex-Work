@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Не забудьте импортировать Link
+import { Link, useNavigate } from 'react-router-dom'; // Не забудьте импортировать Link
 import { T_Activity } from '../../utils/types';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { AddToSelfEmployed, fetchActivities } from '../../slices/activitiesSlice';
 
 
@@ -13,7 +13,14 @@ type ActivityCardProps = {
 const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => { 
     const dispatch = useAppDispatch()
 
+    const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
+    const navigate=useNavigate()
+
     const handeAddToSelfEmployed = async () => {
+        if(!isAuthenticated){
+            navigate('/403/')
+
+        }
         await dispatch(AddToSelfEmployed(String(activity.id)))
         await dispatch(fetchActivities())
     }

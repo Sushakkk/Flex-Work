@@ -13,6 +13,9 @@ import { T_UpdateUserData } from "../utils/types";
 
 const initialState: T_User = {
 	id: -1,
+    moderator_id:-1,
+    access_token_moderator:"",
+    access_token:"",
 	first_name: "",
 	last_name: "",
     password:"",
@@ -59,7 +62,7 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
         
         
 
-        return response.data.user;
+        return response.data;
     }
 );
 
@@ -140,17 +143,27 @@ const userlice = createSlice({
 	reducers: {
         setValidationError: (state, action) => {
             state.validation_error = action.payload
+        },
+        setModerator:(state) =>{
+            state.moderator_id= state.id
+            state.access_token_moderator=state.access_token
         }
 	},
     extraReducers: (builder) => {
         builder.addCase(handleLogin.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true
-            state.id = action.payload.id
-            state.username = action.payload.username
-            state.first_name = action.payload.first_name
-            state.last_name = action.payload.last_name
-            state.password = action.payload.password
-            state.is_staff= action.payload.is_staff
+            state.id = action.payload.user.id
+            state.username = action.payload.user.username
+            state.first_name = action.payload.user.first_name
+            state.last_name = action.payload.user.last_name
+            state.password = action.payload.user.password
+            state.is_staff= action.payload.user.is_staff
+            state.access_token=action.payload.access_token
+            if(action.payload.user.is_staff){
+                state.moderator_id=state.id
+                state.access_token_moderator= state.access_token
+            }
+            
         });
         builder.addCase(handleRegister.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true
@@ -209,6 +222,6 @@ const userlice = createSlice({
 export const useF= () => useSelector((state: RootState) => state.user.first_name );
 
 
-export const {setValidationError} = userlice.actions
+export const {setValidationError, setModerator} = userlice.actions
 
 export default userlice.reducer

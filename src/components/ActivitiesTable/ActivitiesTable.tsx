@@ -47,11 +47,11 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ activities }) => {
         accessor: "category",
         Cell: ({ value }: { value: string }) => value ? value : "--",
       },
-      {
-        Header: "Статус",
-        accessor: "status", 
-        Cell: ({ value }: { value: string }) => statuses[value] || value,
-      }
+      // {
+      //   Header: "Статус",
+      //   accessor: "status", 
+      //   Cell: ({ value }: { value: string }) => statuses[value] || value,
+      // }
     ],
     []
   );

@@ -601,6 +601,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/self-employed/`,
         method: "GET",
         query: query,
+        headers: params.headers,
         secure: true,
         ...params,
       }),

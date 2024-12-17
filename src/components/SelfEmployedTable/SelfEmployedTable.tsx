@@ -15,7 +15,7 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
     navigate(`/self-employed/${self_employed_id}`);
   };
 
-  const statuses: Record<string, string> = {
+  const  statuses: Record<string, string> = {
     draft: "Черновик",
     deleted: "Удалена",
     formed: "Сформирована",

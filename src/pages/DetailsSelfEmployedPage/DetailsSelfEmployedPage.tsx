@@ -13,6 +13,17 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row, Input } from 'reactstrap';
 import './DetailsSelfEmployedPage.css';
 
+
+
+
+const  statuses: Record<string, string> = {
+  draft: "Черновик",
+  deleted: "Удалена",
+  formed: "Сформирована",
+  completed: "Завершена",
+  rejected: "Отклонена",
+};
+
 const DetailsSelfEmployedPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -115,10 +126,14 @@ const DetailsSelfEmployedPage = () => {
 
   const { activities } = self_employed;
 
+
+
+
   return (
     <main id="main" className="page">
       <div className="page__basket _container">
         <div className="basket__content">
+          <div className='basket__titles'>
           <div className="basket_fio_container">
             <span className="basket_fio detail-label">Самозанятый:</span>
             <Input
@@ -129,7 +144,9 @@ const DetailsSelfEmployedPage = () => {
             />
             <button onClick={saveFields} className="button-page grey" type="submit">Сохранить</button>
           </div>
-
+          <div><span className="basket_fio detail-label">Статус:</span>{statuses[status]}</div>
+          </div>
+          
           <div className="basket__cards">
             {activities.map((activity) => (
               <div className="basket__row" key={activity.id}>

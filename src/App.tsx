@@ -20,7 +20,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { useAppDispatch, useAppSelector } from './store'
-import { handleCheck } from './slices/userSlice'
+import { handleCheck, setModerator } from './slices/userSlice'
 import DetailsSelfEmployedPage from './pages/DetailsSelfEmployedPage/DetailsSelfEmployedPage';
 import SelfEmployedPage from './pages/SelfEmployedPage';
 import EditActivitiesPage from './pages/EditActivitiesPage';
@@ -34,15 +34,21 @@ function App() {
   const dispatch = useAppDispatch()
 
   const checked = useAppSelector((state) => state.user)
-  console.log('check', checked)
+ 
+  const isStaff = useAppSelector((state) => state.user.is_staff);
+
 
   useEffect(() => {
       dispatch(handleCheck())
+      if(isStaff){
+        dispatch(setModerator())
+      }
+      console.log('check', checked)
   }, []);
 
-  if (!checked) {
-      return <></>
-  }
+  console.log('check', checked)
+
+
 
  
   return (

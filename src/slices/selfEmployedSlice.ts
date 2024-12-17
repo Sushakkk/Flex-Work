@@ -29,11 +29,11 @@ const initialState: T_SelfEmployedSlice = {
 };
 
 export const fetchSelfEmployed = createAsyncThunk<T_SelfEmployed, string>(
-    'self-employed/id',
-    async (self_employed_id) => {
-        const response = await api.selfEmployed.selfEmployedRead(self_employed_id) ;
-        return response.data;
-    }
+  'self-employed/id',
+  async (self_employed_id) => {
+      const response = await api.selfEmployed.selfEmployedRead(self_employed_id) ;
+      return response.data;
+  }
 );
 
 export const fetchAllSelfEmployed = createAsyncThunk<T_SelfEmployed[], void, { state: RootState }>(

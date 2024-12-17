@@ -11,7 +11,11 @@
     
 }
 
-
+.basket__titles{
+    display: flex;
+    flex-direction: column;
+    gap:30PX
+}
 
 
 .basket_fio_container{
