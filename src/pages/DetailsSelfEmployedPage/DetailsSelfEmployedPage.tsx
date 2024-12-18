@@ -144,7 +144,7 @@ const DetailsSelfEmployedPage = () => {
             />
             <button onClick={saveFields} className="button-page grey" type="submit">Сохранить</button>
           </div>
-          <div><span className="basket_fio detail-label">Статус:</span>{statuses[status]}</div>
+          {/* <div><span className="basket_fio detail-label">Статус:</span>{statuses[status]}</div> */}
           </div>
           
           <div className="basket__cards">
