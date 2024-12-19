@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 const ActivitiesPage = () => {
-    const [isMock, setIsMock] = useState(false);
+
   
     const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
     const self_employed_id = useAppSelector((state) => state.selfEmployed.self_employed_id);
@@ -19,6 +19,7 @@ const ActivitiesPage = () => {
 
 
     const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
+    const isStaff = useAppSelector((state) => state.user.is_staff);
 
     const dispatch = useAppDispatch()
     const title= useTitle() || '';
@@ -46,22 +47,7 @@ const ActivitiesPage = () => {
 
     }, [title])
     
-    // useEffect(() => {
-    //     fetchData();
-    // }, [title]);
-
-
-
-    
-    
-    // const createMocks = () => {
-    //     setIsMock(true);
-    //     setActivities(ActivitiesMocks.filter(activity => activity.title.toLowerCase().includes(title.toLowerCase())));
-    // }
-
-   
-   
-
+  
 
     return (
         <main id="main" className="page">
@@ -85,7 +71,7 @@ const ActivitiesPage = () => {
                             </div>
                         </form>
                         
-                        {isAuthenticated && self_employed_id !== null ? (
+                        {isAuthenticated && !isStaff && self_employed_id !== null ? (
                             <Link to={`/self-employed/${self_employed_id}`} className="basket-container">
                                 <img
                                     className="basket__img"

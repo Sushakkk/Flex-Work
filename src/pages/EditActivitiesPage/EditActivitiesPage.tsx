@@ -17,13 +17,10 @@ const EditActivitiesPage = () => {
   const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated);
   const isStaff = useAppSelector((state) => state.user.is_staff);
 
-  const filters = useAppSelector<T_SelfEmployedFilters>((state) => state.selfEmployed.filters);
+
 
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState( ""); // По умолчанию пустой статус
-  const [dateFormationStart, setDateFormationStart] = useState(""); 
-  const [dateFormationEnd, setDateFormationEnd] = useState( ""); 
 
 
   const handleAddClick = (e: React.FormEvent<HTMLButtonElement>) => {

@@ -87,19 +87,19 @@ const Header = () => {
               }
             }}
           >
-            {isStaff ? (
+            {isStaff && (
             <li className="menu__item">
               <Link to="/edit-activities" className="menu__link menu__link_active">
-                Деятельности
+                Все Деятельности
               </Link>
-            </li>): (
-               <li className="menu__item">
+            </li>)}
+
+                <li className="menu__item">
                <Link to="/activities" className="menu__link menu__link_active">
                  Деятельности
                </Link>
              </li>
 
-            )}
             
 
             {/* Дополнительные ссылки */}

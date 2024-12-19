@@ -125,7 +125,13 @@ const EditActivityPage: React.FC = () => {
                   onError={(e) => { e.currentTarget.src = 'https://avatars.mds.yandex.net/i?id=284efc4987205a8f579db78365821d19_sr-8271622-images-thumbs&n=13'; }}
                 />
               ) : (
-                <div>Загрузить изображения</div> // Placeholder when no image is selected
+                <div className="main-block__image">
+                    <img
+                      src={'https://avatars.mds.yandex.net/i?id=284efc4987205a8f579db78365821d19_sr-8271622-images-thumbs&n=13'}
+                      alt={'default'}
+                      
+                    />
+                  </div>
               )}
             </div>
 
