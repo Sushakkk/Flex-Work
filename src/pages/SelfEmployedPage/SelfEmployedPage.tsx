@@ -58,7 +58,7 @@ const SelfEmployedPage = () => {
 
     updateSelfEmployedData(); // Initial fetch
 
-    const intervalId = setInterval(updateSelfEmployedData, 5000); // Повторный запрос каждые 5 секунд
+    const intervalId = setInterval(updateSelfEmployedData, 3000); // Повторный запрос каждые 5 секунд
 
     return () => clearInterval(intervalId); // Очистка интервала при размонтировании компонента
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);

@@ -2,7 +2,7 @@
 
 .table__header{
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     background-color: var(--base);
     justify-items: center;
     padding: 15px;
@@ -25,7 +25,7 @@
 }
 .table__card {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Оптимизировано для 6 колонок */
+    grid-template-columns: repeat(8, 1fr); /* Оптимизировано для 6 колонок */
     width: 100%;
     justify-items: center;
     align-items: center;
