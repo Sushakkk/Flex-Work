@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"; 
-import { Col, Container, Form, Input, Row } from "reactstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Form, Input, Row, Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { T_SelfEmployedFilters } from "../../utils/types";
@@ -17,20 +17,25 @@ const statuses: Record<string, string> = {
 
 const SelfEmployedPage = () => {
   const dispatch = useAppDispatch();
-
+  
   const all_self_employed = useAppSelector((state) => state.selfEmployed.self_employed);
   const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated);
   const filters = useAppSelector<T_SelfEmployedFilters>((state) => state.selfEmployed.filters);
 
+  console.log(filters)
+
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState(""); 
-  const [dateFormationStart, setDateFormationStart] = useState(""); 
-  const [dateFormationEnd, setDateFormationEnd] = useState(""); 
-  const [username, setUsername] = useState(""); 
+  
+
+  
+  const [status, setStatus] = useState(filters.status ==='draft'? "" :filters.status );
+  const [dateFormationStart, setDateFormationStart] = useState(filters.start_date || "");
+  const [dateFormationEnd, setDateFormationEnd] = useState(filters.end_date || "");
+  const [username, setUsername] = useState(filters.username || "");
 
   const statusOptions = {
-    "": "Любой", 
+    "": "Любой",
     formed: "Сформирована",
     completed: "Завершена",
     rejected: "Отклонена",
@@ -43,30 +48,61 @@ const SelfEmployedPage = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Эффект для выполнения short polling
+  useEffect(() => {
+    if (filters) {
+      setStatus(filters.status || "");
+      setDateFormationStart(filters.start_date || "");
+      setDateFormationEnd(filters.end_date || "");
+      setUsername(filters.username || "");
+    }
+  }, [filters]);
+
+  // Эффект для обновления фильтров в Redux и запроса данных
   useEffect(() => {
     const updateSelfEmployedData = () => {
       const updatedFilters: T_SelfEmployedFilters = {
-        status: status || "", 
-        start_date: dateFormationStart || "", 
-        end_date: dateFormationEnd || "", 
+        status: status || "",
+        start_date: dateFormationStart || "",
+        end_date: dateFormationEnd || "",
+        username: username || "",
       };
 
-      dispatch(updateFilters(updatedFilters)); // Обновляем фильтры
-      dispatch(fetchAllSelfEmployed()); // Запрашиваем новые данные
+      // Обновляем фильтры в Redux
+      dispatch(updateFilters(updatedFilters)); 
+      // Запрашиваем данные с учётом новых фильтров
+      dispatch(fetchAllSelfEmployed());
     };
 
-    updateSelfEmployedData(); // Initial fetch
+    updateSelfEmployedData(); // Инициализация запроса с актуальными фильтрами
 
-    const intervalId = setInterval(updateSelfEmployedData, 3000); // Повторный запрос каждые 5 секунд
+    const intervalId = setInterval(updateSelfEmployedData, 5000); // Повторный запрос каждые 3 секунды
 
     return () => clearInterval(intervalId); // Очистка интервала при размонтировании компонента
-  }, [status, dateFormationStart, dateFormationEnd, dispatch]);
+  }, [status, dateFormationStart, dateFormationEnd, username, dispatch]);
 
-  // Фильтрация самозанятых по имени пользователя
-  const filteredSelfEmployed = all_self_employed.filter((item) =>
-    item.user_username.toLowerCase().includes(username.toLowerCase())
-  );
+  // Фильтрация самозанятых по имени пользователя с проверкой на undefined и null
+  const filteredSelfEmployed = all_self_employed.filter((item) => {
+    if (username && typeof username === 'string' && item.user_username) {
+      return item.user_username.toLowerCase().includes(username.toLowerCase());
+    }
+    return true;
+  });
+
+  // Обработчик сброса фильтров
+  const handleResetFilters = () => {
+    setStatus("");
+    setDateFormationStart("");
+    setDateFormationEnd("");
+    setUsername("");
+
+    // Сброс фильтров в Redux
+    dispatch(updateFilters({
+      status: "",
+      start_date: "",
+      end_date: "",
+      username: "",
+    }));
+  };
 
   return (
     <main id="main" className="page">
@@ -105,6 +141,12 @@ const SelfEmployedPage = () => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)} 
                 />
+              </Col>
+              {/* Добавляем кнопку сброса фильтров */}
+              <Col md="2">
+                <Button className="button-page grey" onClick={handleResetFilters}>
+                  Сбросить фильтры
+                </Button>
               </Col>
             </Row>
           </Form>

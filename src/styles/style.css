@@ -52,6 +52,7 @@ body{
 }
 
 .button-page.grey {
+	text-wrap: nowrap;
     color: var(--base); /* Цвет текста на цвет фона */
     background-color: var(--border); /* Цвет фона на цвет текста */
     border: 1px solid var(--base); /* Цвет границы на цвет текста */

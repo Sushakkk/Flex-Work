@@ -71,7 +71,7 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
         id: "actions-completed", // Уникальный id для столбца с действием "Завершить"
         Cell: ({ row }: { row: any }) => {
           const { id, status } = row.original; // Получаем id и status из строки
-          console.log('status in "Завершить" button:', status); // Проверка значения статуса
+        
           return (
             <button 
               onClick={() => ModeratorHandler('completed', id)} 
@@ -88,7 +88,7 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
         id: "actions-rejected", // Уникальный id для столбца с действием "Отклонить"
         Cell: ({ row }: { row: any }) => {
           const { id, status } = row.original; // Получаем id и status из строки
-          console.log('status in "Отклонить" button:', status); // Проверка значения статуса
+       
           return (
             <button 
               onClick={() => ModeratorHandler('rejected', id)} 

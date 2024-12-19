@@ -47,7 +47,7 @@ export const fetchAllSelfEmployed = createAsyncThunk<T_SelfEmployed[], void, { s
             start_date: filters.start_date,
             end_date: filters.end_date
         })
-        console.log('get all', response.data.self_employed  );
+
         
         return response.data.self_employed ;
     }
