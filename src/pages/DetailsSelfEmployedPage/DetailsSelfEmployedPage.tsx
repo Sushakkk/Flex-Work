@@ -106,7 +106,6 @@ const DetailsSelfEmployedPage = () => {
   };
 
   const handleCheckboxChange = async (activityId, importance) => {
-    // Обновляем важность через asyncThunk
     await dispatch(updateImportance({
       self_employed_id: id,
       activity_id: activityId,
@@ -144,7 +143,9 @@ const DetailsSelfEmployedPage = () => {
             />
             <button onClick={saveFields} className="button-page grey" type="submit">Сохранить</button>
           </div>
-          {/* <div><span className="basket_fio detail-label">Статус:</span>{statuses[status]}</div> */}
+          {status!=='draft' &&(
+            <div><span className="basket_fio detail-label">Статус:</span>{statuses[status]}</div>
+          )}
           </div>
           
           <div className="basket__cards">
@@ -169,6 +170,7 @@ const DetailsSelfEmployedPage = () => {
                       checked={activity.importance} // если важность активности true, чекбокс будет отмечен
                       onChange={() => handleCheckboxChange(activity.id, !activity.importance)} // инвертируем значение importance
                       id={`checkbox-${activity.id}`}
+                      disabled={status !== 'draft'} 
                     />
                   )}
 
@@ -178,7 +180,8 @@ const DetailsSelfEmployedPage = () => {
                     </Link>
                   </div>
                 </div>
-                <svg
+                {status==='draft' &&(
+                  <svg
                   onClick={() => deleteActivityFromSelfEmployedHandler(activity.id)}
                   width="64px"
                   height="64px"
@@ -195,6 +198,7 @@ const DetailsSelfEmployedPage = () => {
                     <path d="M18 6L6.00001 18" stroke="#adadad" strokeLinecap="round"></path>
                   </g>
                 </svg>
+                )}
               </div>
             ))}
           </div>

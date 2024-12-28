@@ -22,7 +22,7 @@ const SelfEmployedPage = () => {
   const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated);
   const filters = useAppSelector<T_SelfEmployedFilters>((state) => state.selfEmployed.filters);
 
-  console.log(filters)
+
 
   const navigate = useNavigate();
 

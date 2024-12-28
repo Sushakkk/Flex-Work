@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
-import { useAppDispatch } from "../../store";  // Подключаем dispatch
+import { useAppDispatch, useAppSelector } from "../../store";  // Подключаем dispatch
 import CustomTable from "../CustomTable";
 import { formatDate } from "../../utils/utils";
 import { T_SelfEmployed } from "../../utils/types";
@@ -13,6 +13,7 @@ interface SelfEmployedTableProps {
 const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();  // Используем dispatch из Redux
+  const isStaff = useAppSelector((state) => state.user.is_staff);
 
   const handleClick = (self_employed_id: number): void => {
     navigate(`/self-employed/${self_employed_id}`);
@@ -39,72 +40,75 @@ const SelfEmployedTable: React.FC<SelfEmployedTableProps> = ({ all_self_employed
     () => [
       {
         Header: "№",
-        accessor: "id", // используем id как уникальный идентификатор
+        accessor: "id",
       },
       {
         Header: "Пользователь",
-        accessor: "user_username", // статус
-        Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
+        accessor: "user_username",
+        Cell: ({ value }: { value: string }) => statuses[value] || value,
       },
       {
         Header: "Статус",
-        accessor: "status", // статус
-        Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
+        accessor: "status",
+        Cell: ({ value }: { value: string }) => statuses[value] || value,
       },
       {
         Header: "Дата создания",
-        accessor: "created_date", // поле для даты создания
-        Cell: ({ value }: { value: string }) => formatDate(value), // форматируем дату
+        accessor: "created_date",
+        Cell: ({ value }: { value: string }) => formatDate(value),
       },
       {
         Header: "Дата завершения",
-        accessor: "completion_date", // поле для даты завершения
+        accessor: "completion_date",
         Cell: ({ value }: { value: string }) => value ? formatDate(value) : "--",
       },
       {
         Header: "ИНН",
-        accessor: "inn", // поле для ИНН
-        Cell: ({ value }: { value: string }) => value || "", // выводим ИНН или пустую строку
+        accessor: "inn",
+        Cell: ({ value }: { value: string }) => value || "",
       },
-      {
-        Header: "Завершить", // Новый столбец с кнопками
-        id: "actions-completed", // Уникальный id для столбца с действием "Завершить"
-        Cell: ({ row }: { row: any }) => {
-          const { id, status } = row.original; // Получаем id и status из строки
-        
-          return (
-            <button 
-              onClick={() => ModeratorHandler('completed', id)} 
-              className="button-page-s green"
-              disabled={status === "completed" || status === "rejected"} // Кнопка будет задизейблена, если заявка завершена или отклонена
-            >
-              Завершить
-            </button>
-          );
+      ...(isStaff ? [  // Условно добавляем столбцы только для модераторов
+        {
+          Header: "Завершить",
+          id: "actions-completed",
+          Cell: ({ row }: { row: any }) => {
+            const { id, status } = row.original;
+          
+            return (
+              <button 
+                onClick={() => ModeratorHandler('completed', id)} 
+                className="button-page-s green"
+                disabled={status === "completed" || status === "rejected"}
+              >
+                Завершить
+              </button>
+            );
+          },
         },
-      },
-      {
-        Header: "Отклонить", // Новый столбец с кнопками
-        id: "actions-rejected", // Уникальный id для столбца с действием "Отклонить"
-        Cell: ({ row }: { row: any }) => {
-          const { id, status } = row.original; // Получаем id и status из строки
-       
-          return (
-            <button 
-              onClick={() => ModeratorHandler('rejected', id)} 
-              className="button-page-s red"
-              disabled={status === "rejected" || status === "completed"} // Кнопка будет задизейблена, если заявка отклонена или завершена
-            >
-              Отклонить
-            </button>
-          );
-        },
-      },
+        {
+          Header: "Отклонить",
+          id: "actions-rejected",
+          Cell: ({ row }: { row: any }) => {
+            const { id, status } = row.original;
+         
+            return (
+              <button 
+                onClick={() => ModeratorHandler('rejected', id)} 
+                className="button-page-s red"
+                disabled={status === "rejected" || status === "completed"}
+              >
+                Отклонить
+              </button>
+            );
+          },
+        }
+      ] : []) // Если не модератор, столбцы не добавляются
     ],
-    [dispatch]  // Добавляем dispatch в зависимости
+    [dispatch, isStaff]  // Добавляем isStaff в зависимости
   );
+  
 
-  return <CustomTable columns={columns} data={all_self_employed} onClick={handleClick} />;
+  return <CustomTable columns={columns} data={all_self_employed} onClick={handleClick}  />;
 };
 
 export default SelfEmployedTable;
