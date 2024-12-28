@@ -1,0 +1,40 @@
+
+
+.table__header{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    background-color: var(--base);
+    justify-items: center;
+    padding: 15px;
+
+}
+.table__cards{
+    display: flex;
+    flex-direction: column;
+  
+
+}
+.table__row {
+    padding-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    
+    
+}
+.table__card {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* Оптимизировано для 6 колонок */
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+    gap: 20px; /* Расстояние между элементами */
+    border: 2px solid var(--border);
+    padding: 20px 30px;
+    border-radius: 20px;
+    background-color: var(--base);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
